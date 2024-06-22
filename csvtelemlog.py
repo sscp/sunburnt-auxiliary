@@ -23,12 +23,10 @@ while True:
     with open(path, "a") as file:
         file.write(strdata)
 
+    # cleaner print if one string printed all at once, then carriage return
     headers = CSV_HEADER.split(",")
     datas = strdata.split(",")
-
     printstr = ""
     for i in range(len(headers)):
         printstr = printstr + f"{headers[i]}: {datas[i]}\n"
-        # print(f"{headers[i]}: {datas[i]}")
-
     print(printstr, end="\r")
