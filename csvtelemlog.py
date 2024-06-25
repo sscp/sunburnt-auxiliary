@@ -9,6 +9,7 @@ with open("headers.txt","r") as file:
 sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 sock.bind((UDP_IP, UDP_PORT))
+print(CSV_HEADER)
 
 time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
 path = "logs/" + time + ".csv"
@@ -29,5 +30,6 @@ while True:
     datas = strdata.split(",")
     printstr = ""
     for i in range(len(headers)):
-        printstr = printstr + f"{headers[i]}: {datas[i]}\n"
+        blank = ' ' * (25 - len(headers[i]))    
+        printstr = printstr + f"{headers[i]}:" + blank + f"{datas[i]}\n"
     print(printstr, end="\r")
