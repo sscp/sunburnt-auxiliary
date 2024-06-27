@@ -34,7 +34,15 @@ drive_mode
 throttle_value
 regen_value
 brake_pedal_value
-button_state
+cruise_down_on
+cruise_up_on
+reverse_on
+horn_on
+headlights_on
+rearview_on
+power_save_on
+left_turn_on
+right_turn_on
 mppt_current_A0
 mppt_power_A0
 mppt_temp_A0
