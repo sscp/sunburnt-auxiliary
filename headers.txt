@@ -73,6 +73,7 @@ mppt_power_C1
 mppt_temp_C1
 mppt_vin_C1
 mppt_vout_C1
+charge_enabled
 cell1
 cell2
 cell3
