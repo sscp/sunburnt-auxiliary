@@ -31,5 +31,9 @@ while True:
     printstr = ""
     for i in range(len(headers)):
         blank = ' ' * (25 - len(headers[i]))    
-        printstr = printstr + f"{headers[i]}:" + blank + f"{datas[i]}\n"
+        printstr = printstr + f"{headers[i]}:{blank}{datas[i]}"
+        if (i%3 == 0):
+            printstr+="\n"
+        else:
+            printstr+="\t"
     print(printstr, end="\r")
