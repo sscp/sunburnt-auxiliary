@@ -73,6 +73,7 @@ mppt_power_C1
 mppt_temp_C1
 mppt_vin_C1
 mppt_vout_C1
+battery_current
 charge_enabled
 highside_contactor_on
 lowside_contactor_on
