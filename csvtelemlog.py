@@ -1,14 +1,16 @@
 import socket
 from datetime import datetime
 
-UDP_IP = "192.168.0.100"
-UDP_PORT = 10000
+# UDP_IP = "192.168.0.255"
+UDP_IP = socket.gethostbyname(socket.gethostname())
+UDP_PORT = 6000
 CSV_HEADER = ""
 with open("headers.txt","r") as file:
     CSV_HEADER = ",".join(list(map(lambda x:x.strip("\n "),file.readlines())))
 sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 sock.bind((UDP_IP, UDP_PORT))
+print(UDP_IP, UDP_PORT)
 print(CSV_HEADER)
 
 time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
