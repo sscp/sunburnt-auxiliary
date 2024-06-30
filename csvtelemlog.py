@@ -1,8 +1,7 @@
 import socket
 from datetime import datetime
 
-# UDP_IP = "192.168.0.255"
-UDP_IP = socket.gethostbyname(socket.gethostname())
+UDP_IP = socket.gethostbyname_ex(socket.gethostname())[2][1]
 UDP_PORT = 6000
 CSV_HEADER = ""
 with open("headers.txt","r") as file:
