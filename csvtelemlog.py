@@ -17,7 +17,7 @@ time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
 path = "logs/" + time + ".csv"
 
 with open(path, "a") as file:
-    file.write(CSV_HEADER)
+    file.write(CSV_HEADER+"\n")
 
 while True:
     data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
@@ -32,8 +32,9 @@ while True:
     datas = strdata.split(",")
     printstr = ""
     for i in range(len(headers)):
-        blank = ' ' * (25 - len(headers[i]))    
-        printstr = printstr + f"{headers[i]}:{blank}{datas[i]}"
+        blank = ' ' * (25 - len(headers[i]))   
+        blank2 = ' ' * (6 - len(datas[i]))    
+        printstr = printstr + f"{headers[i]}:{blank}{datas[i]}{blank2}"
         if (i%3 == 0):
             printstr+="\n"
         else:
