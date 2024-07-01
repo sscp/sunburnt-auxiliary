@@ -15,6 +15,7 @@ brake_pedal_value
 reverse_on
 left_turn_on
 right_turn_on
+rearview_on
 mppt_current_A0
 mppt_power_A0
 mppt_temp_A0

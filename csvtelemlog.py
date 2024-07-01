@@ -17,11 +17,16 @@ print(UDP_IP, UDP_PORT)
 time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
 path = "logs/" + time + ".csv"
 
+if UDP_IP[:3] != "192":
+    print("Incorrect IP!")
+while UDP_IP[:3] != "192":
+    pass
+
 with open(path, "a") as file:
     file.write(CSV_HEADER+"\n")
 
 with open("desired_headers.txt","r") as file:
-    desired_headers = ",".join(list(map(lambda x:x.strip("\n "),file.readlines())))
+    desired_headers = list(map(lambda x:x.strip("\n "),file.readlines()))
 print(f"Printing: {desired_headers}")
 while True:
     dataDict = {}
@@ -31,12 +36,13 @@ while True:
     
     with open(path, "a") as file:
         file.write(strdata)
-
+    print("\n"*25)
     # cleaner print if one string printed all at once, then carriage return
     headers = CSV_HEADER.split(",")
     datas = strdata.split(",")
     printstr = ""
-    dataDict[headers[i]] = datas[i]
+    for i in range(len(headers)):
+        dataDict[headers[i]] = datas[i]
     for i in range(len(desired_headers)):
         header = desired_headers[i]
         blank = ' ' * (25 - len(header))   
