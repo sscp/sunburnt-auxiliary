@@ -38,7 +38,7 @@ cruise_down_on
 cruise_up_on
 reverse_on
 horn_on
-headlights_on
+lock_on
 rearview_on
 power_save_on
 left_turn_on
