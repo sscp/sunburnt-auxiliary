@@ -104,7 +104,6 @@ CellVoltages_27
 CellVoltages_28
 CellVoltages_29
 CellVoltages_30
-CellVoltages_31
 MCP3913_HighVoltVS_RawData
 MCP3913_HighVoltVS_Voltage
 MCP3913_HighVoltVS_Current
