@@ -201,3 +201,5 @@ Battery_MinCellVoltage
 Battery_MaxCellVoltage
 Battery_ThrottleCurrentLimit
 Battery_RegenCurrentLimit
+BMS_Flags
+BMS_State
