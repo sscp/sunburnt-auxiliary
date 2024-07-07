@@ -54,3 +54,39 @@ while True:
         else:
             printstr+="\t"
     print(printstr, end="\r")
+
+
+"""
+
+enum BMSFlags
+{
+  NONE = 0;
+  UNDER_2_VOLTS_FLAG        = 0x1;
+  UNDER_2_5_VOLTS_FLAG      = 0x2;
+  OVER_4_4_VOLTS_FLAG    = 0x4;
+  OVER_4_2_VOLTS_FLAG          = 0x8;
+  OVER_TEMP_SHORT_FLAG     = 0x10;
+  OVER_TEMP_LONG_FLAG      = 0x20;
+  PACK_OVERCURRENT_SHORT_FLAG  = 0x80;
+  PACK_OVERCURRENT_LONG_FLAG  = 0x100;
+  PRE_FAIL_FLAG     = 0x200;
+  EXTERNAL_KILL = 0x400;
+  LTC_CHIP_FAILED = 0x800;
+}
+enum State
+{
+  STARTUP          = 0;
+  LV_SWITCH_ENABLE = 1;
+  PRECHARGE_ENABLE        = 2;
+  LOWSIDE_SHUT    = 3;
+  HIGHSIDE_SHUT          = 4;
+  LV_BUCK_ENABLE     = 5;
+  PACK_NORMAL      = 6;
+  FAULTED     = 7;
+  HIGHSIDE_OPEN = 8;
+  LOWSIDE_OPEN  = 9;
+  PRECHARGE_DISABLE = 10;
+}
+
+
+"""
