@@ -46,7 +46,7 @@ while True:
         dataDict[headers[i]] = datas[i]
     for i in range(len(desired_headers)):
         header = desired_headers[i]
-        blank = ' ' * (25 - len(header))   
+        blank = ' ' * (30 - len(header))   
         blank2 = ' ' * (6 - len(dataDict[header]))    
         printstr = printstr + f"{header}:{blank}{dataDict[header]}{blank2}"
         if (i%3 == 0):
