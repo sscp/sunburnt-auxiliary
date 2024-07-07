@@ -30,7 +30,7 @@ with open("desired_headers.txt","r") as file:
 print(f"Printing: {desired_headers}")
 while True:
     dataDict = {}
-    data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
+    data, addr = sock.recvfrom(2048) # buffer size is 2048 bytes
 
     strdata = data.decode("utf-8")
     
