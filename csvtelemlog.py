@@ -41,6 +41,7 @@ while True:
     headers = CSV_HEADER.split(",")
     datas = strdata.split(",")
     printstr = ""
+    print(len(headers), len(datas))
     for i in range(len(headers)):
         dataDict[headers[i]] = datas[i]
     for i in range(len(desired_headers)):
