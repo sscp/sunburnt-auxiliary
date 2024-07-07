@@ -89,3 +89,5 @@ Thermistor_Temperature31
 Thermistor_MaxTemp
 Battery_MinCellVoltage
 Battery_MaxCellVoltage
+BMS_Flags
+BMS_State
