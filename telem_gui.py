@@ -4,18 +4,22 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.font import Font
 
+IP_List = socket.gethostbyname_ex(socket.gethostname())[2]
+UDP_IP = -1
+for ip in IP_List:
+    if int(ip[:3]) == 192:
+        UDP_IP = ip
+if UDP_IP == -1:
+    print("Incorrect IP!")
+while UDP_IP == -1:
+    pass
 # Set up the socket for receiving data
-UDP_IP = socket.gethostbyname_ex(socket.gethostname())[2][-1]
 UDP_PORT = 6000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet, UDP
 sock.bind((UDP_IP, UDP_PORT))
 print(UDP_IP, UDP_PORT)
 
-if UDP_IP[:3] != "192":
-    print("Incorrect IP!")
-while UDP_IP[:3] != "192":
-    pass
 
 # Read the CSV header 
 with open("headers.txt", "r") as file:
@@ -61,7 +65,7 @@ def split_headers(headers, splits):
         i += k
 
 # Split desired headers into rows specified below - see desired_headers to get numbers
-splits = [10, 8, 5, 5, 5, 5, 5, 5, 8, 8, 8, 8]
+splits = [5 for j in range(6)] + [1]
 header_rows = list(split_headers(desired_headers, splits))
 
 treeviews = []
@@ -79,10 +83,10 @@ for header_row in header_rows:
 
 def update_data():
     dataDict = {}
-    data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+    data, addr = sock.recvfrom(2048)  # buffer size is 2048 bytes
 
     strdata = data.decode("utf-8").strip()
-
+    print(strdata)
     headers = CSV_HEADER.split(",")
     datas = strdata.split(",")
     for i in range(len(headers)):
