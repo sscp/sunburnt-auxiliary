@@ -1,7 +1,14 @@
 import socket
 from datetime import datetime
-
-UDP_IP = socket.gethostbyname_ex(socket.gethostname())[2][-1]
+IP_List = socket.gethostbyname_ex(socket.gethostname())[2]
+UDP_IP = -1
+for ip in IP_List:
+    if int(ip[:3]) == 192:
+        UDP_IP = ip
+if UDP_IP == -1:
+    print("Incorrect IP!")
+while UDP_IP == -1:
+    pass
 UDP_PORT = 6000
 CSV_HEADER = ""
 with open("headers.txt","r") as file:
@@ -17,10 +24,6 @@ print(UDP_IP, UDP_PORT)
 time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
 path = "logs/" + time + ".csv"
 
-if UDP_IP[:3] != "192":
-    print("Incorrect IP!")
-while UDP_IP[:3] != "192":
-    pass
 
 with open(path, "a") as file:
     file.write(CSV_HEADER+"\n")
