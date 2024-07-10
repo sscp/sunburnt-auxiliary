@@ -1,5 +1,23 @@
+"""
+How To Use:
+1. cd to C:\Program Files\InfluxData\influxdb
+2. Run influxd.exe
+3. Run this program
+4. Open the url below: http://localhost:8086
+
+To delete data:
+influx delete -t 7xfcpLvj2jf7RYh8snjXjJeNWagDQlKxugw7aDl5ee_pqh4SrL8q3KbjgVP2R-57hIDjDXayBApCHlLA8cHa2A== -o "Stanford Solar Car Project" -b Telemetry --start 2024-07-10T12:00:27Z --stop 2024-07-10T22:50:27Z
+Except replace the start/stop with current time
+"""
+
 import socket
 from datetime import datetime
+import influxdb_client, os, time
+from influxdb_client import InfluxDBClient, Point, WritePrecision
+from influxdb_client.client.write_api import SYNCHRONOUS
+token = "7xfcpLvj2jf7RYh8snjXjJeNWagDQlKxugw7aDl5ee_pqh4SrL8q3KbjgVP2R-57hIDjDXayBApCHlLA8cHa2A==" #os.environ.get("INFLUXDB_TOKEN")
+org = "Stanford Solar Car Project"
+url = "http://localhost:8086"
 IP_List = socket.gethostbyname_ex(socket.gethostname())[2]
 UDP_IP = -1
 for ip in IP_List:
@@ -19,7 +37,9 @@ sock = socket.socket(socket.AF_INET, # Internet
 sock.bind((UDP_IP, UDP_PORT))
 print(UDP_IP, UDP_PORT)
 
-# print(CSV_HEADER)
+write_client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
+bucket="Telemetry"
+write_api = write_client.write_api(write_options=SYNCHRONOUS)
 
 time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
 path = "logs/" + time + ".csv"
@@ -44,9 +64,26 @@ while True:
     headers = CSV_HEADER.split(",")
     datas = strdata.split(",")
     printstr = ""
-    print(len(headers), len(datas))
     for i in range(len(headers)):
         dataDict[headers[i]] = datas[i]
+        data = dataDict[headers[i]]
+        try:
+            data = float(data)
+        except:
+            pass
+        if "CellVoltages_" in headers[i]:
+            point = (
+                Point(headers[i])
+                .tag("cell_number",int(headers[i][13:]))
+                .field("output_value", data)
+            )
+        else:
+            point = (
+                Point(headers[i])
+                .field("output_value", data)
+            )
+        write_api.write(bucket=bucket, org="Stanford Solar Car Project", record=point)
+
     for i in range(len(desired_headers)):
         header = desired_headers[i]
         blank = ' ' * (30 - len(header))   
@@ -76,20 +113,4 @@ enum BMSFlags
   EXTERNAL_KILL = 0x400;
   LTC_CHIP_FAILED = 0x800;
 }
-enum State
-{
-  STARTUP          = 0;
-  LV_SWITCH_ENABLE = 1;
-  PRECHARGE_ENABLE        = 2;
-  LOWSIDE_SHUT    = 3;
-  HIGHSIDE_SHUT          = 4;
-  LV_BUCK_ENABLE     = 5;
-  PACK_NORMAL      = 6;
-  FAULTED     = 7;
-  HIGHSIDE_OPEN = 8;
-  LOWSIDE_OPEN  = 9;
-  PRECHARGE_DISABLE = 10;
-}
-
-
 """

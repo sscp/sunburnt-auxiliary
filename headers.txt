@@ -199,7 +199,13 @@ Thermistor_Temperature31
 Thermistor_MaxTemp
 Battery_MinCellVoltage
 Battery_MaxCellVoltage
+Battery_AvgCellVoltage
+Battery_DeltaCellVoltage
+Battery_MinCell
+Battery_MaxCell
 Battery_ThrottleCurrentLimit
 Battery_RegenCurrentLimit
 BMS_Flags
 BMS_State
+BMS_TempState
+BMS_PackState
