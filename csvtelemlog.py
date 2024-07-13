@@ -6,7 +6,7 @@ How To Use:
 4. Open the url below: http://localhost:8086
 
 To delete data:
-influx delete -t 7xfcpLvj2jf7RYh8snjXjJeNWagDQlKxugw7aDl5ee_pqh4SrL8q3KbjgVP2R-57hIDjDXayBApCHlLA8cHa2A== -o "Stanford Solar Car Project" -b Telemetry --start 2024-07-10T12:00:27Z --stop 2024-07-10T22:50:27Z
+influx delete -b Telemetry --start 2024-07-10T12:00:27Z --stop 2024-07-10T22:50:27Z
 Except replace the start/stop with current time
 """
 
@@ -15,7 +15,7 @@ from datetime import datetime
 import influxdb_client, os, time
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
-token = "7xfcpLvj2jf7RYh8snjXjJeNWagDQlKxugw7aDl5ee_pqh4SrL8q3KbjgVP2R-57hIDjDXayBApCHlLA8cHa2A==" #os.environ.get("INFLUXDB_TOKEN")
+token = os.environ.get("INFLUXDB_TOKEN")
 org = "Stanford Solar Car Project"
 url = "http://localhost:8086"
 IP_List = socket.gethostbyname_ex(socket.gethostname())[2]
@@ -75,6 +75,12 @@ while True:
             point = (
                 Point(headers[i])
                 .tag("cell_number",int(headers[i][13:]))
+                .field("output_value", data)
+            )
+        elif "Thermistor_Temperature" in headers[i]:
+            point = (
+                Point(headers[i])
+                .tag("thermistor_number",int(headers[i][22:]))
                 .field("output_value", data)
             )
         else:

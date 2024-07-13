@@ -8,7 +8,7 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 log_file_path = "logs/07-07-2024_17-33-59.csv"
 
 # Initialize InfluxDB client
-token = "7xfcpLvj2jf7RYh8snjXjJeNWagDQlKxugw7aDl5ee_pqh4SrL8q3KbjgVP2R-57hIDjDXayBApCHlLA8cHa2A=="  # os.environ.get("INFLUXDB_TOKEN")
+token = os.environ.get("INFLUXDB_TOKEN")
 org = "Stanford Solar Car Project"
 url = "http://localhost:8086"
 bucket = "Telemetry"
@@ -28,12 +28,17 @@ with open(log_file_path, "r") as file:
 log_file = open(log_file_path, "r")
 log_file.readline()  # Skip the header line
 
+SKIP_LINES = 183 # skip some number of lines?
+
+for i in range(SKIP_LINES):
+    log_file.readline()
+
 while True:
     strdata = log_file.readline().strip()
     if not strdata:
         # Reached end of file, wait before trying again
         time.sleep(1)
-        continue
+        break
 
     dataDict = {}
     headers = CSV_HEADER.split(",")
@@ -54,7 +59,14 @@ while True:
                 .tag("cell_number",int(headers[i][13:]))
                 .field("output_value", data)
             )
-
+        
+        elif "Thermistor_Temperature" in headers[i]:
+            point = (
+                Point(headers[i])
+                .tag("thermistor_number",int(headers[i][22:]))
+                .field("output_value", data)
+            )
+        
         else:
             point = (
                 Point(headers[i])
@@ -76,3 +88,4 @@ while True:
 
 # Close the log file when done
 log_file.close()
+print("Log finished")
